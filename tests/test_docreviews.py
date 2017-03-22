@@ -4,6 +4,9 @@ from docreviews import create_app, models
 from docreviews.api import create_api, db
 from builtins import str
 
+from docreviews.models import Doctor, Review
+
+
 class DocReviewsTestCase(unittest.TestCase):
 
     def create_sample_data(self):
@@ -77,6 +80,24 @@ class DocReviewsTestCase(unittest.TestCase):
         self.assertEquals(1, rjson["id"])
         self.assertEquals(2, len(rjson["reviews"]))
 
+    def test_delete_doctor(self):
+        """
+        Delete a doctor by id and verify it's no longer in the database
+        """
+        response = self.app.delete("/doctors/1")
+        self.assertEqual(response.status, "204 NO CONTENT")
+        self.assertIsNone(Doctor.query.get(1))
+
+    def test_patch_doctor(self):
+        """
+        Update a doctor's name by id and verify JSON result
+        """
+        header = {"Content-Type": "application/json"}
+        data = json.dumps({"name": "Doctor Strangelove"})
+        response = self.app.patch("/doctors/1", data=data, headers=header)
+        rjson = json.loads(str(response.data, "utf-8"))
+        self.assertEquals("Doctor Strangelove", rjson["name"])
+
     def test_get_review(self):
         """
         Retrieve a review by id and verify JSON result
@@ -116,6 +137,24 @@ class DocReviewsTestCase(unittest.TestCase):
         for review in rjson["reviews"]:
             self.assertEquals("Doctor Strange", review["doctor"]["name"])
             self.assertTrue("description" in review)
+
+    def test_delete_review(self):
+        """
+        Delete a doctor by id and verify it's no longer in the database
+        """
+        response = self.app.delete("/reviews/1")
+        self.assertEqual(response.status, "204 NO CONTENT")
+        self.assertIsNone(Review.query.get(1))
+
+    def test_patch_review(self):
+        """
+        Update a doctor's name by id and verify JSON result
+        """
+        header = {"Content-Type": "application/json"}
+        data = json.dumps({"description": "Best doctor ever"})
+        response = self.app.patch("/reviews/1", data=data, headers=header)
+        rjson = json.loads(str(response.data, "utf-8"))
+        self.assertEquals("Best doctor ever", rjson["description"])
 
     def test_post_bad_doctor(self):
         """

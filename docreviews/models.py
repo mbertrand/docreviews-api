@@ -49,7 +49,8 @@ class Review(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     description = db.Column(db.Text)
     doctor_id = db.Column(db.Integer, db.ForeignKey("doctor.id"), nullable=False)
-    doctor = db.relationship(Doctor, backref=db.backref("reviews"))
+    doctor = db.relationship(
+        Doctor, backref=db.backref("reviews", cascade="delete, delete-orphan"))
 
     def __init__(self, description, doctor_id, id=None):
         self.description = description
