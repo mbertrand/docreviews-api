@@ -1,7 +1,6 @@
 DOCREVIEWS API
 =============
 This API can be used to add, update, retrieve, and delete doctors and reviews.
-It makes use of two packages: flask-sqlalchemy and flask-restless.
 
 
 Installation
@@ -30,7 +29,7 @@ The default database is sqlite.  To use a different database, such as postgres:
     - `SQLALCHEMY_DATABASE_URI = "postgresql://user:password@dbhost/docreviews"`
 
 - Assign an environment variable to be equal to the above filename (including path), for example:
-    - export DOCREVIEWS_API_SETTINGS=/home/matt/custom_settings.cfg
+    - `export DOCREVIEWS_API_SETTINGS=/home/matt/custom_settings.cfg`
 
 - start the application like this:
     `python -m docreviews.api --env_config DOCREVIEWS_API_SETTINGS`
