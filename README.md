@@ -47,7 +47,7 @@ API Endpoints
 
 - /doctors
     - GET: Return all doctors in the database
-    - POST: Add a doctor to the database (JSON data should include name, doctor_id)
+    - POST: Add a doctor to the database (JSON data should include name)
 
 - /doctors/<doctor_id>
     - GET: Return the doctor with the specified id
